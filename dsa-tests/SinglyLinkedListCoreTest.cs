@@ -8,7 +8,7 @@ using System.Linq;
 namespace dsa_tests;
 
 [TestFixture]
-public class SinglyLinkedListProTests
+public class SinglyLinkedListCoreTest
 {
     [Test]
     public void NewList_State()
