@@ -55,8 +55,6 @@ public class SinglyLinkedList<T> : IEnumerable<T>
             tail.Next = newNode;
             tail = newNode;
         } 
-        
-        
 
         Count++;
     }
@@ -118,32 +116,116 @@ public class SinglyLinkedList<T> : IEnumerable<T>
 
     public bool Remove(T value)
     {
-        throw new NotImplementedException();
+        if (head == null)
+        {
+            return false;
+        }
+        
+        if (EqualityComparer<T>.Default.Equals(head.Value, value))
+        {
+            RemoveFirst();
+            return true;
+        }
+
+        if (EqualityComparer<T>.Default.Equals(tail.Value, value))
+        {
+            RemoveLast();
+            return true;
+        }
+
+        var iter = head;
+        while (iter != null && iter.Next != null)
+        {
+            if (EqualityComparer<T>.Default.Equals(iter.Next.Value, value))
+            {
+                iter.Next = iter.Next.Next;
+                return true;
+            }
+
+            iter = iter.Next;
+        }
+
+        return false;
     }
 
     public bool Contains(T value)
     {
-        throw new NotImplementedException();
+        if (head == null)
+        {
+            return false;
+        } 
+        
+        Node? iter = head;
+        while (iter != null)
+        {
+            if (EqualityComparer<T>.Default.Equals(iter.Value, value))
+            {
+                return true;
+            }
+
+            iter = iter.Next;
+        }
+        
+
+        return false;
     }
 
     public T GetAt(int index)
     {
-        throw new NotImplementedException();
+        if (index > (Count - 1) || index < 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+        
+        var iter = head;
+        for (var i = 0; i < index; i++)
+        {
+            iter = iter?.Next;
+        }
+        
+        return iter!.Value;
     }
 
     public void InsertAt(int index, T value)
     {
-        throw new NotImplementedException();
+        if (index == 0)
+        {
+            AddFirst(value);
+            return;
+        }
+        
+        if (index > (Count) || index < 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        
+        var iter = head;
+        for (var i = 0; i < index - 1; i++)
+        {
+            iter = iter?.Next;
+        }
+
+        Node newNode = new Node(value);
+        newNode.Next = iter.Next;
+        iter.Next = newNode;
     }
 
     public void Clear()
     {
-        throw new NotImplementedException();
+        head = null;
+        tail = null;
+        Count = 0;
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        var current = head;
+        while (current != null)
+        {
+            yield return current.Value;
+            current = current.Next;
+        }
     }
 
     IEnumerator IEnumerable.GetEnumerator()
