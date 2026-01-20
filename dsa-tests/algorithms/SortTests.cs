@@ -16,4 +16,14 @@ public class SortTests
 
         Assert.That(list, Is.EqualTo(new List<int> { 1, 2, 4, 5, 8 }));
     }
+    
+    [Test]
+    public void BogoSort_SortsUnorderedList()
+    {
+        var list = new List<int> { 5, 1, 4, 2, 8 };
+
+        BogoSort.Sort(list);
+
+        Assert.That(list, Is.EqualTo(new List<int> { 1, 2, 4, 5, 8 }));
+    }
 }
